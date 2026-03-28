@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chlxrine222</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #ffffff;
+            color: #444444;
+            font-family: 'Cambria', serif;
+            text-align: center;
+            min-height: 100vh;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile-section {
+            margin-bottom: 32px;
+        }
+        .pfp {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+        .username {
+            font-size: 25px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            color: #888888;
+        }
+        .subtitle {
+            font-size: 15.5px;
+            color: #666666;
+        }
+        .divider {
+            width: 680px;
+            max-width: 94%;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 36px auto;
+        }
+        .main-image {
+            max-width: 620px;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 36px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.09);
+        }
+        .flower {
+            color: #888888;
+            font-size: 28px;
+            margin: 8px 0 14px;
+            font-family: system-ui, sans-serif;
+        }
+        .links {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        .links li {
+            margin: 13px 0;
+        }
+        .links a {
+            color: #666666;           /* Slightly darker so it's obvious */
+            text-decoration: none;
+            font-size: 17.5px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+        }
+        .links a:hover {
+            color: #444444;           /* Darker on hover */
+            text-decoration: underline;
+        }
+        @media (max-width: 640px) {
+            .pfp { width: 108px; height: 108px; }
+            .username { font-size: 23px; }
+            .divider { width: 520px; }
+            .main-image { max-width: 540px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-section">
+        <img src="pfp.jpg" alt="Profile Picture" class="pfp">
+        <div class="username">@chlxrine222</div>
+        <div class="subtitle">18yo producer</div>
+    </div>
+    <div class="divider"></div>
+    <img src="image_ex.jpg" alt="Main Image" class="main-image">
+    <div class="divider"></div>
+    <div class="flower">✿</div>
+    <ul class="links">
+        <li><a href="https://www.youtube.com/@chlxrine222" target="_blank">youtube</a></li>
+        <li><a href="https://www.instagram.com/chlxrine222/" target="_blank">instagram</a></li>
+        <li><a href="https://soundcloud.com/chlxrine222" target="_blank">soundcloud</a></li>
+    </ul>
+</body>
+</html>
