@@ -122,7 +122,7 @@
             color: #888888;
             font-size: 28px;
             margin: 8px 0 14px;
-            font-family: system-ui, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         .links {
             list-style: none;
@@ -199,12 +199,51 @@
             color: white;
             transform: rotate(90deg);
         }
-        /* ====================== MOBILE-ONLY BUBBLE POP EFFECT ====================== */
+
+        /* ====================== MOBILE-ONLY CHANGES ====================== */
         @media (max-width: 640px) {
             body {
                 cursor: auto;
-                overflow-y: auto;
+                overflow-y: hidden; /* No scrolling - everything fits */
+                padding: 20px 15px;
+                justify-content: center;
             }
+            .profile-section {
+                margin-bottom: 20px;
+            }
+            .pfp {
+                width: 98px;
+                height: 98px;
+                margin-bottom: 14px;
+            }
+            .username {
+                font-size: 21px;
+            }
+            .subtitle {
+                font-size: 14px;
+            }
+            .divider {
+                width: 85%;
+                margin: 24px auto;
+            }
+            .main-image {
+                max-width: 92%;
+                margin-bottom: 24px;
+            }
+            .flower {
+                font-size: 24px;
+                margin: 6px 0 10px;
+            }
+            .links {
+                margin-bottom: 18px;
+            }
+            .links a {
+                font-size: 16px;
+            }
+        }
+
+        /* Mobile bubble effect */
+        @media (max-width: 640px) {
             .custom-cursor { display: none; }
             .bubble {
                 position: fixed;
@@ -232,6 +271,7 @@
                 opacity: 0;
             }
         }
+
         /* Mobile entrance animations */
         @media (max-width: 640px) and (hover: none) {
             .profile-section { animation: fadeUp 0.8s forwards 0.2s; opacity: 0; }
@@ -249,12 +289,6 @@
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
         @keyframes fadeIn { to { opacity: 1; } }
-        @media (max-width: 640px) {
-            .pfp { width: 108px; height: 108px; }
-            .username { font-size: 23px; }
-            .divider { width: 520px; }
-            .main-image { max-width: 540px; }
-        }
     </style>
 </head>
 <body>
@@ -266,7 +300,7 @@
     <div class="divider"></div>
     <img src="image_ex.jpg" alt="Main Image" class="main-image">
     <div class="divider"></div>
-    <div class="flower">✿</div>
+    <div class="flower">❀</div>
     <ul class="links">
         <li><a href="https://www.youtube.com/@chlxrine222" target="_blank">youtube</a></li>
         <li><a href="https://www.instagram.com/chlxrine222/" target="_blank">instagram</a></li>
@@ -299,7 +333,6 @@
                 }
             });
 
-            // FIXED: Better mouse leave / re-enter handling
             document.addEventListener('mouseenter', () => {
                 if (hasMoved) {
                     cursor.classList.add('visible');
@@ -315,7 +348,6 @@
                     requestAnimationFrame(animateCursor);
                     return;
                 }
-
                 cursorX += (mouseX - cursorX) * 0.22;
                 cursorY += (mouseY - cursorY) * 0.22;
                 const dx = mouseX - cursorX;
