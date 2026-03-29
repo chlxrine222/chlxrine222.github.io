@@ -36,7 +36,7 @@
                 z-index: 999999; 
                 user-select: none; 
                 opacity: 0; 
-                transition: opacity 0.3s ease;
+                transition: opacity 0.25s ease;
             }
             .custom-cursor.visible { opacity: 1; }
             .custom-cursor::after {
@@ -51,9 +51,14 @@
             }
         }
 
+        /* Hide custom cursor over interactive elements */
+        .pfp, .thumb-wrapper, #play-btn, .progress-container, .links a, 
+        .close-btn, .main-image {
+            cursor: none !important;
+        }
+
         .profile-section { margin-bottom: 24px; display: flex; flex-direction: column; align-items: center; }
         
-        /* PFP with glow hover */
         .pfp {
             width: 92px; 
             height: 92px; 
@@ -62,7 +67,7 @@
             margin-bottom: 14px; 
             box-shadow: 0 6px 20px rgba(0,0,0,0.08);
             transition: all 0.4s ease;
-            cursor: pointer;
+            cursor: none !important;
         }
         .pfp:hover {
             box-shadow: 0 12px 35px rgba(0,0,0,0.15);
@@ -77,9 +82,7 @@
             color: #888888;
             transition: all 0.3s ease;
         }
-        .username:hover {
-            color: #666666;
-        }
+        .username:hover { color: #666666; }
 
         .subtitle { font-size: 13.5px; color: #666666; }
 
@@ -89,11 +92,32 @@
 
         .beat-section { width: 100%; max-width: 480px; margin-bottom: 32px; }
         .last-beat-label { font-size: 13px; font-weight: 600; color: #666666; margin-bottom: 10px; letter-spacing: 0.5px; }
+        
         .thumb-wrapper {
-            width: 190px; margin: 0 auto 12px; aspect-ratio: 1 / 1;
-            overflow: hidden; border-radius: 0; box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            width: 190px; 
+            margin: 0 auto 12px; 
+            aspect-ratio: 1 / 1;
+            overflow: hidden; 
+            border-radius: 0; 
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            cursor: none !important;
         }
-        #beat-thumb { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; transform: scale(1.32); }
+        .thumb-wrapper:hover {
+            box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+            transform: scale(1.04);
+        }
+        #beat-thumb { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            object-position: 50% 35%; 
+            transform: scale(1.32);
+            transition: transform 0.4s ease;
+        }
+        .thumb-wrapper:hover #beat-thumb {
+            transform: scale(1.38);
+        }
 
         /* Audio Player */
         .player-bar {
@@ -193,9 +217,10 @@
             border-radius: 8px;
             box-shadow: 0 10px 28px rgba(0,0,0,0.09); 
             margin-bottom: 10px;
+            cursor: none !important;
         }
 
-        /* Popup - Slightly Bigger */
+        /* Popup */
         .popup { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.78); 
@@ -208,7 +233,7 @@
         }
         .popup.active { display: flex; opacity: 1; }
         .popup-content {
-            width: 410px;          /* ← Made a bit bigger (was 380px) */
+            width: 410px; 
             max-width: 92%; 
             background: white; 
             border-radius: 12px;
@@ -223,6 +248,7 @@
             position: absolute; top: 18px; right: 22px; font-size: 38px; color: #ddd;
             width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease;
+            cursor: none !important;
         }
         .close-btn:hover { color: white; transform: rotate(90deg); }
 
@@ -247,7 +273,7 @@
 
     <div class="beat-section">
         <div class="last-beat-label">LAST BEAT</div>
-        <div class="thumb-wrapper">
+        <div class="thumb-wrapper" id="thumb-link">
             <img id="beat-thumb" src="" alt="Latest Beat">
         </div>
         <div class="player-bar">
@@ -287,6 +313,7 @@
         const API_KEY = "AIzaSyDRqDNY-LiuHE0ybakeWYAV4miFLzQGkto";
         const CHANNEL_ID = "UCt0txnD59pqKAVWhf2wKz_A";
         let player;
+        let currentVideoId = "";
 
         async function loadLatestBeat() {
             try {
@@ -294,15 +321,21 @@
                 const data = await res.json();
                 const video = data.items[0];
                 if (!video) return;
+
+                currentVideoId = video.id.videoId;
                 document.getElementById("beat-thumb").src = video.snippet.thumbnails.high.url;
 
+                document.getElementById("thumb-link").onclick = () => {
+                    window.open(`https://www.youtube.com/watch?v=${currentVideoId}`, "_blank");
+                };
+
                 if (typeof YT !== "undefined") {
-                    initPlayer(video.id.videoId);
+                    initPlayer(currentVideoId);
                 } else {
                     const tag = document.createElement('script');
                     tag.src = "https://www.youtube.com/iframe_api";
                     document.head.appendChild(tag);
-                    window.onYouTubeIframeAPIReady = () => initPlayer(video.id.videoId);
+                    window.onYouTubeIframeAPIReady = () => initPlayer(currentVideoId);
                 }
             } catch(e) { console.error(e); }
         }
@@ -328,7 +361,7 @@
             });
         }
 
-        // Progress bar with preview
+        // Progress bar
         const progressContainer = document.getElementById("progress-container");
         const progressBar = document.getElementById("progress-bar");
         const timeDisplay = document.getElementById("time");
@@ -368,7 +401,7 @@
             player.seekTo(percent * duration);
         });
 
-        // Gravity smooth cursor
+        // Gravity smooth cursor with better hiding
         if (window.matchMedia('(hover: hover) and (min-width: 641px)').matches) {
             const cursor = document.getElementById('cursor');
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0, hasMoved = false;
