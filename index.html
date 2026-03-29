@@ -38,12 +38,15 @@
                 pointer-events: none;
                 z-index: 999999;
                 user-select: none;
+                opacity: 0;                    /* Starts invisible */
+                transition: opacity 0.3s ease;
+            }
+            .custom-cursor.visible {
                 opacity: 1;
-                transition: opacity 0.2s ease;
             }
             .custom-cursor::after {
                 content: '➤';
-                font-size: 32px;
+                font-size: 48px;
                 color: #1a1a1a;
                 position: absolute;
                 top: 50%;
@@ -207,7 +210,7 @@
         @media (max-width: 640px) {
             body {
                 cursor: auto;
-                overflow-y: auto; /* Makes the page scrollable */
+                overflow-y: auto;
             }
             .custom-cursor { display: none; }
 
@@ -239,7 +242,7 @@
             }
         }
 
-        /* Mobile entrance animations (unchanged) */
+        /* Mobile entrance animations */
         @media (max-width: 640px) and (hover: none) {
             .profile-section { animation: fadeUp 0.8s forwards 0.2s; opacity: 0; }
             .pfp { animation: popIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s; opacity: 0; transform: scale(0.85); }
@@ -294,15 +297,20 @@
     </div>
 
     <script>
-        // Desktop cursor logic (only runs on devices that support hover)
+        // Desktop cursor logic - only on hover-capable devices
         if (window.matchMedia('(hover: hover) and (min-width: 641px)').matches) {
             const cursor = document.getElementById('cursor');
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0;
+            let hasMoved = false;   // Track if mouse has moved at least once
 
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
-                cursor.style.opacity = '1';
+
+                if (!hasMoved) {
+                    hasMoved = true;
+                    cursor.classList.add('visible');   // Make cursor appear smoothly
+                }
             });
 
             document.addEventListener('mouseleave', () => {
@@ -310,6 +318,11 @@
             });
 
             function animateCursor() {
+                if (!hasMoved) {
+                    requestAnimationFrame(animateCursor);
+                    return;
+                }
+
                 cursorX += (mouseX - cursorX) * 0.22;
                 cursorY += (mouseY - cursorY) * 0.22;
                 const dx = mouseX - cursorX;
@@ -324,7 +337,7 @@
             }
             animateCursor();
 
-            // Hover scale effect for desktop
+            // Hover scale effect
             document.querySelectorAll('a, .close-btn').forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.25)`;
@@ -338,7 +351,6 @@
         // Mobile tap bubble effect
         if (window.matchMedia('(max-width: 640px)').matches) {
             document.addEventListener('touchstart', (e) => {
-                // Skip bubble if tapping the close button
                 if (e.target.closest('.close-btn')) return;
 
                 const touch = e.touches[0];
@@ -348,14 +360,11 @@
                 bubble.style.top = `${touch.clientY - 13}px`;
                 document.body.appendChild(bubble);
 
-                // Remove bubble after animation
-                setTimeout(() => {
-                    bubble.remove();
-                }, 500);
+                setTimeout(() => bubble.remove(), 500);
             });
         }
 
-        // PFP Popup (works on both)
+        // PFP Popup
         const pfp = document.getElementById('pfp');
         const popup = document.getElementById('popup');
         const closeBtn = document.getElementById('close');
