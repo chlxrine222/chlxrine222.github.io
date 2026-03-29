@@ -6,7 +6,7 @@
     <title>chlxrine222</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-       
+      
         * {
             margin: 0;
             padding: 0;
@@ -23,9 +23,43 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            cursor: none;
+            overflow: hidden;
         }
+        /* Custom Cartoon Cursor - Always on top */
+        .custom-cursor {
+            position: fixed;
+            width: 42px;
+            height: 42px;
+            pointer-events: none;
+            z-index: 999999;
+            user-select: none;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+        .custom-cursor::after {
+            content: '➤';
+            font-size: 28px;
+            color: #1a1a1a;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+            line-height: 1;
+        }
+
+        /* Hide real cursor more reliably */
+        a, .pfp, .close-btn {
+            cursor: none !important;
+        }
+
+        /* Profile Section */
         .profile-section {
             margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .pfp {
             width: 120px;
@@ -34,18 +68,37 @@
             object-fit: cover;
             margin-bottom: 18px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
         }
+        .pfp:hover {
+            transform: scale(1.05);
+            box-shadow:
+                0 0 15px rgba(136, 136, 136, 0.5),
+                0 0 25px rgba(136, 136, 136, 0.3),
+                0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Username - Soft glow */
         .username {
             font-size: 25px;
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 6px;
             color: #888888;
+            transition: text-shadow 0.4s ease;
+            display: inline-block;
+        }
+        .username:hover {
+            text-shadow:
+                0 0 8px rgba(136, 136, 136, 0.45),
+                0 0 16px rgba(136, 136, 136, 0.25),
+                0 0 24px rgba(136, 136, 136, 0.15);
         }
         .subtitle {
             font-size: 15.5px;
             color: #666666;
         }
+
         .divider {
             width: 680px;
             max-width: 94%;
@@ -75,7 +128,7 @@
             margin: 13px 0;
         }
         .links a {
-            color: #666666;           /* Slightly darker so it's obvious */
+            color: #666666;
             text-decoration: none;
             font-size: 17.5px;
             font-weight: 500;
@@ -83,20 +136,139 @@
             transition: all 0.3s ease;
         }
         .links a:hover {
-            color: #444444;           /* Darker on hover */
+            color: #444444;
             text-decoration: underline;
         }
+
+        /* Popup */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.78);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .popup.active {
+            display: flex;
+            opacity: 1;
+        }
+        .popup-content {
+            width: 420px;
+            max-width: 92%;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+            transform: scale(0.7);
+            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        .popup.active .popup-content {
+            transform: scale(1);
+        }
+        .popup img {
+            width: 100%;
+            border-radius: 8px;
+            display: block;
+        }
+        .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 38px;
+            color: #ddd;
+            cursor: none;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 100001;
+        }
+        .close-btn:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* ====================== MOBILE-ONLY ANIMATIONS ====================== */
+        @media (max-width: 640px) and (hover: none) {
+            .profile-section {
+                opacity: 0;
+                animation: fadeUp 0.8s forwards 0.2s;
+            }
+            .pfp {
+                opacity: 0;
+                transform: scale(0.85);
+                animation: popIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s;
+            }
+            .username {
+                opacity: 0;
+                animation: fadeUp 0.7s forwards 0.6s;
+            }
+            .subtitle {
+                opacity: 0;
+                animation: fadeUp 0.7s forwards 0.8s;
+            }
+            .main-image {
+                opacity: 0;
+                transform: scale(0.95);
+                animation: fadeUp 0.9s forwards 1s;
+            }
+            .divider {
+                opacity: 0;
+                animation: fadeIn 0.6s forwards 1.2s;
+            }
+            .flower {
+                opacity: 0;
+                animation: fadeIn 0.6s forwards 1.4s;
+            }
+            .links li {
+                opacity: 0;
+                transform: translateY(10px);
+                animation: fadeUp 0.5s forwards;
+            }
+            .links li:nth-child(1) { animation-delay: 1.5s; }
+            .links li:nth-child(2) { animation-delay: 1.65s; }
+            .links li:nth-child(3) { animation-delay: 1.8s; }
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        /* ================================================================ */
+
         @media (max-width: 640px) {
             .pfp { width: 108px; height: 108px; }
             .username { font-size: 23px; }
             .divider { width: 520px; }
             .main-image { max-width: 540px; }
+            .custom-cursor::after { font-size: 42px; }
         }
     </style>
 </head>
 <body>
     <div class="profile-section">
-        <img src="pfp.jpg" alt="Profile Picture" class="pfp">
+        <img src="pfp.jpg" alt="Profile Picture" class="pfp" id="pfp">
         <div class="username">@chlxrine222</div>
         <div class="subtitle">18yo producer</div>
     </div>
@@ -109,5 +281,71 @@
         <li><a href="https://www.instagram.com/chlxrine222/" target="_blank">instagram</a></li>
         <li><a href="https://soundcloud.com/chlxrine222" target="_blank">soundcloud</a></li>
     </ul>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- PFP Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close-btn" id="close">×</span>
+            <img src="pfp.jpg" alt="Profile Picture Large">
+        </div>
+    </div>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.22;
+            cursorY += (mouseY - cursorY) * 0.22;
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
+            const targetRotation = Math.atan2(dy, dx) * (180 / Math.PI);
+            rotation += (targetRotation - rotation) * 0.28;
+
+            cursor.style.left = `${cursorX}px`;
+            cursor.style.top = `${cursorY}px`;
+            cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // PFP Popup
+        const pfp = document.getElementById('pfp');
+        const popup = document.getElementById('popup');
+        const closeBtn = document.getElementById('close');
+
+        pfp.addEventListener('click', () => {
+            popup.classList.add('active');
+        });
+        closeBtn.addEventListener('click', () => {
+            popup.classList.remove('active');
+        });
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) popup.classList.remove('active');
+        });
+
+        // Hover scale on interactive elements (desktop only)
+        document.querySelectorAll('a, .close-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.25)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1)`;
+            });
+        });
+    </script>
 </body>
 </html>
