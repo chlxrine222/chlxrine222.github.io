@@ -4,295 +4,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chlxrine - Socials</title>
-    
-    <!-- Favicon (browser tab icon) -->
     <link rel="icon" type="image/png" href="222.png">
-    
+   
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-     
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: #ffffff;
             color: #444444;
             font-family: 'Cambria', serif;
             text-align: center;
             min-height: 100vh;
-            padding: 30px 20px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            cursor: none;
+            cursor: none !important;
+            overflow-y: auto;
         }
-        /* ====================== DESKTOP CURSOR ====================== */
         @media (hover: hover) and (min-width: 641px) {
-            body {
-                overflow: hidden;
-                cursor: none;
-            }
             .custom-cursor {
-                position: fixed;
-                width: 42px;
-                height: 42px;
-                pointer-events: none;
-                z-index: 999999;
-                user-select: none;
-                opacity: 0; /* Starts invisible */
-                transition: opacity 0.3s ease;
+                position: fixed; width: 42px; height: 42px; pointer-events: none;
+                z-index: 999999; user-select: none; opacity: 0; transition: opacity 0.3s ease;
             }
-            .custom-cursor.visible {
-                opacity: 1;
-            }
+            .custom-cursor.visible { opacity: 1; }
             .custom-cursor::after {
-                content: '➤';
-                font-size: 30px;
-                color: #1a1a1a;
-                position: absolute;
-                top: 50%;
-                left: 50%;
+                content: '➤'; font-size: 30px; color: #1a1a1a;
+                position: absolute; top: 50%; left: 50%;
                 transform: translate(-50%, -50%) rotate(0deg);
                 text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
-                line-height: 1;
             }
         }
-        /* Hide real cursor on desktop interactive elements */
-        @media (hover: hover) and (min-width: 641px) {
-            a, .pfp, .close-btn {
-                cursor: none !important;
-            }
-        }
-        /* Profile Section */
-        .profile-section {
-            margin-bottom: 32px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .pfp {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 18px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
-        }
-        .pfp:hover {
-            transform: scale(1.05);
-            box-shadow:
-                0 0 15px rgba(136, 136, 136, 0.5),
-                0 0 25px rgba(136, 136, 136, 0.3),
-                0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-        .username {
-            font-size: 25px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
-            color: #888888;
-            transition: text-shadow 0.4s ease;
-            display: inline-block;
-        }
-        .username:hover {
-            text-shadow:
-                0 0 8px rgba(136, 136, 136, 0.45),
-                0 0 16px rgba(136, 136, 136, 0.25),
-                0 0 24px rgba(136, 136, 136, 0.15);
-        }
-        .subtitle {
-            font-size: 15.5px;
-            color: #666666;
-        }
-        .divider {
-            width: 680px;
-            max-width: 94%;
-            height: 2px;
-            background: #e0e0e0;
-            margin: 36px auto;
-        }
-        .main-image {
-            max-width: 620px;
+        .profile-section { margin-bottom: 32px; display: flex; flex-direction: column; align-items: center; }
+        .pfp { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 18px;
+               box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: all 0.4s ease; }
+        .username { font-size: 25px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 6px; color: #888888; }
+        .subtitle { font-size: 15.5px; color: #666666; }
+        .divider { width: 680px; max-width: 94%; height: 2px; background: #e0e0e0; margin: 36px auto; }
+
+        .main-image { max-width: 620px; width: 100%; height: auto; border-radius: 8px; margin-bottom: 36px; box-shadow: 0 12px 35px rgba(0,0,0,0.09); }
+
+        /* Beat Section */
+        .beat-section {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 36px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.09);
+            max-width: 620px;
+            margin-top: 30px;
+            margin-bottom: 40px;
         }
-        .flower {
-            color: #888888;
-            font-size: 28px;
-            margin: 8px 0 14px;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-        .links {
-            list-style: none;
-            margin-bottom: 24px;
-        }
-        .links li {
-            margin: 13px 0;
-        }
-        .links a {
+        .last-beat-label {
+            font-size: 14px;
+            font-weight: 600;
             color: #666666;
-            text-decoration: none;
-            font-size: 17.5px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
-        .links a:hover {
-            color: #444444;
-            text-decoration: underline;
+        .thumb-wrapper {
+            width: 240px;
+            margin: 0 auto 12px;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 0;           /* sharp square */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
-        /* Popup */
-        .popup {
-            position: fixed;
-            top: 0;
-            left: 0;
+        #beat-thumb {
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.78);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 100000;
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            object-fit: cover;
+            object-position: 50% 35%;
+            transform: scale(1.30);     /* ← De-zoomed by 10% (now 30% total zoom) */
         }
-        .popup.active {
-            display: flex;
-            opacity: 1;
-        }
-        .popup-content {
-            width: 420px;
-            max-width: 92%;
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
-            transform: scale(0.7);
-            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-        .popup.active .popup-content {
-            transform: scale(1);
-        }
-        .popup img {
-            width: 100%;
-            border-radius: 8px;
-            display: block;
-        }
-        .close-btn {
-            position: absolute;
-            top: 18px;
-            right: 22px;
-            font-size: 38px;
-            color: #ddd;
-            width: 44px;
-            height: 44px;
+        .player-bar {
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 100001;
+            gap: 10px;
+            background: #f8f8f8;
+            padding: 11px 14px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            max-width: 300px;
+            margin: 0 auto;
         }
-        .close-btn:hover {
+        #play-btn {
+            width: 42px;
+            height: 42px;
+            border: none;
+            background: #888888;
             color: white;
-            transform: rotate(90deg);
+            border-radius: 50%;
+            font-size: 19px;
+            cursor: none !important;
+            box-shadow: 0 4px 10px rgba(136,136,136,0.3);
+            transition: all 0.2s ease;
         }
-
-        /* ====================== MOBILE-ONLY CHANGES ====================== */
-        @media (max-width: 640px) {
-            body {
-                cursor: auto;
-                overflow-y: hidden;
-                padding: 20px 15px;
-                justify-content: center;
-            }
-            .profile-section {
-                margin-bottom: 20px;
-            }
-            .pfp {
-                width: 98px;
-                height: 98px;
-                margin-bottom: 14px;
-            }
-            .username {
-                font-size: 21px;
-            }
-            .subtitle {
-                font-size: 14px;
-            }
-            .divider {
-                width: 85%;
-                margin: 24px auto;
-            }
-            .main-image {
-                max-width: 92%;
-                margin-bottom: 24px;
-            }
-            .flower {
-                font-size: 24px;
-                margin: 6px 0 10px;
-            }
-            .links {
-                margin-bottom: 18px;
-            }
-            .links a {
-                font-size: 16px;
-            }
+        #play-btn:hover { transform: scale(1.12); background: #777777; }
+        .progress-container {
+            flex: 1;
+            height: 5px;
+            background: #e0e0e0;
+            border-radius: 9999px;
+            overflow: hidden;
+            cursor: none !important;
         }
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #888888, #aaaaaa);
+        }
+        #time { font-size: 12px; color: #888; min-width: 34px; }
 
-        /* Mobile bubble effect */
+        .flower { color: #888888; font-size: 28px; margin: 8px 0 14px; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        .links { list-style: none; margin-bottom: 30px; }
+        .links li { margin: 13px 0; }
+        .links a { color: #666666; text-decoration: none; font-size: 17.5px; font-weight: 500; letter-spacing: 0.3px; transition: all 0.3s ease; cursor: none !important; }
+        .links a:hover { color: #444444; text-decoration: underline; }
+
+        /* Popup */
+        .popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.78); display: none; align-items: center; justify-content: center; z-index: 100000; opacity: 0; transition: opacity 0.4s ease; }
+        .popup.active { display: flex; opacity: 1; }
+        .popup-content { width: 420px; max-width: 92%; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 25px 70px rgba(0,0,0,0.35); transform: scale(0.7); transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1); position: relative; }
+        .popup.active .popup-content { transform: scale(1); }
+        .popup img { width: 100%; border-radius: 8px; display: block; }
+        .close-btn { position: absolute; top: 18px; right: 22px; font-size: 38px; color: #ddd; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; z-index: 100001; }
+        .close-btn:hover { color: white; transform: rotate(90deg); }
+
         @media (max-width: 640px) {
+            .beat-section { max-width: 280px; }
+            .thumb-wrapper { width: 200px; }
+            .pfp { width: 98px; height: 98px; }
+            .username { font-size: 21px; }
             .custom-cursor { display: none; }
-            .bubble {
-                position: fixed;
-                width: 26px;
-                height: 26px;
-                background: rgba(136, 136, 136, 0.25);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 99999;
-                transform: scale(0.2);
-                opacity: 0.9;
-                animation: bubblePop 0.45s ease-out forwards;
-            }
         }
-        @keyframes bubblePop {
-            0% {
-                transform: scale(0.2);
-                opacity: 0.9;
-            }
-            60% {
-                transform: scale(1.35);
-            }
-            100% {
-                transform: scale(1.8);
-                opacity: 0;
-            }
-        }
-
-        /* Mobile entrance animations */
-        @media (max-width: 640px) and (hover: none) {
-            .profile-section { animation: fadeUp 0.8s forwards 0.2s; opacity: 0; }
-            .pfp { animation: popIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s; opacity: 0; transform: scale(0.85); }
-            .username { animation: fadeUp 0.7s forwards 0.6s; opacity: 0; }
-            .subtitle { animation: fadeUp 0.7s forwards 0.8s; opacity: 0; }
-            .main-image { animation: fadeUp 0.9s forwards 1s; opacity: 0; transform: scale(0.95); }
-            .divider { animation: fadeIn 0.6s forwards 1.2s; opacity: 0; }
-            .flower { animation: fadeIn 0.6s forwards 1.4s; opacity: 0; }
-            .links li { animation: fadeUp 0.5s forwards; opacity: 0; transform: translateY(10px); }
-            .links li:nth-child(1) { animation-delay: 1.5s; }
-            .links li:nth-child(2) { animation-delay: 1.65s; }
-            .links li:nth-child(3) { animation-delay: 1.8s; }
-        }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { to { opacity: 1; transform: scale(1); } }
-        @keyframes fadeIn { to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -304,106 +146,146 @@
     <div class="divider"></div>
     <img src="image_ex.jpg" alt="Main Image" class="main-image">
     <div class="divider"></div>
+
     <div class="flower">❀&#xfe0e;</div>
     <ul class="links">
         <li><a href="https://www.youtube.com/@chlxrine222" target="_blank">youtube</a></li>
         <li><a href="https://www.instagram.com/chlxrine222/" target="_blank">instagram</a></li>
         <li><a href="https://soundcloud.com/chlxrine222" target="_blank">soundcloud</a></li>
     </ul>
-    <!-- Custom Cursor (Desktop only) -->
+
+    <div class="divider"></div>
+
+    <div class="beat-section">
+        <div class="last-beat-label">LAST BEAT</div>
+        <div class="thumb-wrapper">
+            <img id="beat-thumb" src="" alt="Latest Beat">
+        </div>
+        <div class="player-bar">
+            <button id="play-btn">▶</button>
+            <div class="progress-container" id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <span id="time">0:00</span>
+        </div>
+    </div>
+
     <div class="custom-cursor" id="cursor"></div>
-    <!-- PFP Popup -->
     <div class="popup" id="popup">
         <div class="popup-content">
             <span class="close-btn" id="close">×</span>
             <img src="pfp.jpg" alt="Profile Picture Large">
         </div>
     </div>
+    <div id="hidden-player" style="display:none;"></div>
 
     <script>
-        // Desktop cursor logic - only on hover-capable devices
+        const API_KEY = "AIzaSyDRqDNY-LiuHE0ybakeWYAV4miFLzQGkto";
+        const CHANNEL_ID = "UCt0txnD59pqKAVWhf2wKz_A";
+        let player;
+
+        async function loadLatestBeat() {
+            try {
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=1&type=video`);
+                const data = await res.json();
+                const video = data.items[0];
+                if (!video) return;
+                document.getElementById("beat-thumb").src = video.snippet.thumbnails.high.url;
+
+                if (typeof YT !== "undefined") {
+                    initPlayer(video.id.videoId);
+                } else {
+                    const tag = document.createElement('script');
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    document.head.appendChild(tag);
+                    window.onYouTubeIframeAPIReady = () => initPlayer(video.id.videoId);
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function initPlayer(videoId) {
+            setTimeout(() => {
+                player = new YT.Player('hidden-player', {
+                    height: '0',
+                    width: '0',
+                    videoId: videoId,
+                    events: {
+                        'onReady': () => {
+                            console.log("✅ Player is ready");
+                            const playBtn = document.getElementById("play-btn");
+                            playBtn.addEventListener("click", () => {
+                                if (player.getPlayerState() === 1) {
+                                    player.pauseVideo();
+                                } else {
+                                    player.playVideo();
+                                }
+                            });
+                        },
+                        'onStateChange': (e) => {
+                            const btn = document.getElementById("play-btn");
+                            btn.textContent = (e.data === 1) ? "❚❚" : "▶";
+                        },
+                        'onError': (e) => console.error("Player Error:", e.data)
+                    }
+                });
+            }, 1500);
+        }
+
+        const progressContainer = document.getElementById("progress-container");
+        const progressBar = document.getElementById("progress-bar");
+        const timeDisplay = document.getElementById("time");
+
+        setInterval(() => {
+            if (player && typeof player.getCurrentTime === 'function' && player.getDuration && player.getDuration() > 0) {
+                const current = player.getCurrentTime();
+                const duration = player.getDuration();
+                progressBar.style.width = (current / duration * 100) + "%";
+                const min = Math.floor(current / 60);
+                const sec = Math.floor(current % 60);
+                timeDisplay.textContent = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+            }
+        }, 250);
+
+        progressContainer.addEventListener("click", (e) => {
+            if (!player || !player.getDuration) return;
+            const rect = progressContainer.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            player.seekTo(percent * player.getDuration());
+        });
+
         if (window.matchMedia('(hover: hover) and (min-width: 641px)').matches) {
             const cursor = document.getElementById('cursor');
-            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0;
-            let hasMoved = false;
-
+            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0, hasMoved = false;
             document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-
-                if (!hasMoved) {
-                    hasMoved = true;
-                    cursor.classList.add('visible');
-                }
+                mouseX = e.clientX; mouseY = e.clientY;
+                if (!hasMoved) { hasMoved = true; cursor.classList.add('visible'); }
             });
-
-            document.addEventListener('mouseenter', () => {
-                if (hasMoved) {
-                    cursor.classList.add('visible');
-                }
-            });
-
-            document.addEventListener('mouseleave', () => {
-                cursor.classList.remove('visible');
-            });
-
+            document.addEventListener('mouseenter', () => { if (hasMoved) cursor.classList.add('visible'); });
+            document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
             function animateCursor() {
-                if (!hasMoved) {
-                    requestAnimationFrame(animateCursor);
-                    return;
+                if (hasMoved) {
+                    cursorX += (mouseX - cursorX) * 0.22;
+                    cursorY += (mouseY - cursorY) * 0.22;
+                    const dx = mouseX - cursorX, dy = mouseY - cursorY;
+                    const targetRotation = Math.atan2(dy, dx) * (180 / Math.PI);
+                    rotation += (targetRotation - rotation) * 0.28;
+                    cursor.style.left = `${cursorX}px`;
+                    cursor.style.top = `${cursorY}px`;
+                    cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
                 }
-                cursorX += (mouseX - cursorX) * 0.22;
-                cursorY += (mouseY - cursorY) * 0.22;
-                const dx = mouseX - cursorX;
-                const dy = mouseY - cursorY;
-                const targetRotation = Math.atan2(dy, dx) * (180 / Math.PI);
-                rotation += (targetRotation - rotation) * 0.28;
-
-                cursor.style.left = `${cursorX}px`;
-                cursor.style.top = `${cursorY}px`;
-                cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
                 requestAnimationFrame(animateCursor);
             }
             animateCursor();
-
-            // Hover scale effect
-            document.querySelectorAll('a, .close-btn').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.25)`;
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1)`;
-                });
-            });
         }
 
-        // Mobile tap bubble effect
-        if (window.matchMedia('(max-width: 640px)').matches) {
-            document.addEventListener('touchstart', (e) => {
-                if (e.target.closest('.close-btn')) return;
-                const touch = e.touches[0];
-                const bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-                bubble.style.left = `${touch.clientX - 13}px`;
-                bubble.style.top = `${touch.clientY - 13}px`;
-                document.body.appendChild(bubble);
-                setTimeout(() => bubble.remove(), 500);
-            });
-        }
-
-        // PFP Popup
         const pfp = document.getElementById('pfp');
         const popup = document.getElementById('popup');
         const closeBtn = document.getElementById('close');
-        pfp.addEventListener('click', () => {
-            popup.classList.add('active');
-        });
-        closeBtn.addEventListener('click', () => {
-            popup.classList.remove('active');
-        });
-        popup.addEventListener('click', (e) => {
-            if (e.target === popup) popup.classList.remove('active');
-        });
+        pfp.addEventListener('click', () => popup.classList.add('active'));
+        closeBtn.addEventListener('click', () => popup.classList.remove('active'));
+        popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('active'); });
+
+        window.onload = loadLatestBeat;
     </script>
 </body>
 </html>
