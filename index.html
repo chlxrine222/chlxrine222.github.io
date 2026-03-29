@@ -6,7 +6,7 @@
     <title>chlxrine222</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-      
+     
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +24,6 @@
             align-items: center;
             cursor: none;
         }
-
         /* ====================== DESKTOP CURSOR ====================== */
         @media (hover: hover) and (min-width: 641px) {
             body {
@@ -38,7 +37,7 @@
                 pointer-events: none;
                 z-index: 999999;
                 user-select: none;
-                opacity: 0;                    /* Starts invisible */
+                opacity: 0; /* Starts invisible */
                 transition: opacity 0.3s ease;
             }
             .custom-cursor.visible {
@@ -56,14 +55,12 @@
                 line-height: 1;
             }
         }
-
         /* Hide real cursor on desktop interactive elements */
         @media (hover: hover) and (min-width: 641px) {
             a, .pfp, .close-btn {
                 cursor: none !important;
             }
         }
-
         /* Profile Section */
         .profile-section {
             margin-bottom: 32px;
@@ -87,7 +84,6 @@
                 0 0 25px rgba(136, 136, 136, 0.3),
                 0 8px 30px rgba(0, 0, 0, 0.12);
         }
-
         .username {
             font-size: 25px;
             font-weight: 600;
@@ -107,7 +103,6 @@
             font-size: 15.5px;
             color: #666666;
         }
-
         .divider {
             width: 680px;
             max-width: 94%;
@@ -148,7 +143,6 @@
             color: #444444;
             text-decoration: underline;
         }
-
         /* Popup */
         .popup {
             position: fixed;
@@ -205,7 +199,6 @@
             color: white;
             transform: rotate(90deg);
         }
-
         /* ====================== MOBILE-ONLY BUBBLE POP EFFECT ====================== */
         @media (max-width: 640px) {
             body {
@@ -213,7 +206,6 @@
                 overflow-y: auto;
             }
             .custom-cursor { display: none; }
-
             .bubble {
                 position: fixed;
                 width: 26px;
@@ -227,7 +219,6 @@
                 animation: bubblePop 0.45s ease-out forwards;
             }
         }
-
         @keyframes bubblePop {
             0% {
                 transform: scale(0.2);
@@ -241,7 +232,6 @@
                 opacity: 0;
             }
         }
-
         /* Mobile entrance animations */
         @media (max-width: 640px) and (hover: none) {
             .profile-section { animation: fadeUp 0.8s forwards 0.2s; opacity: 0; }
@@ -256,11 +246,9 @@
             .links li:nth-child(2) { animation-delay: 1.65s; }
             .links li:nth-child(3) { animation-delay: 1.8s; }
         }
-
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
         @keyframes fadeIn { to { opacity: 1; } }
-
         @media (max-width: 640px) {
             .pfp { width: 108px; height: 108px; }
             .username { font-size: 23px; }
@@ -284,10 +272,8 @@
         <li><a href="https://www.instagram.com/chlxrine222/" target="_blank">instagram</a></li>
         <li><a href="https://soundcloud.com/chlxrine222" target="_blank">soundcloud</a></li>
     </ul>
-
     <!-- Custom Cursor (Desktop only) -->
     <div class="custom-cursor" id="cursor"></div>
-
     <!-- PFP Popup -->
     <div class="popup" id="popup">
         <div class="popup-content">
@@ -301,7 +287,7 @@
         if (window.matchMedia('(hover: hover) and (min-width: 641px)').matches) {
             const cursor = document.getElementById('cursor');
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0;
-            let hasMoved = false;   // Track if mouse has moved at least once
+            let hasMoved = false;
 
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
@@ -309,12 +295,19 @@
 
                 if (!hasMoved) {
                     hasMoved = true;
-                    cursor.classList.add('visible');   // Make cursor appear smoothly
+                    cursor.classList.add('visible');
+                }
+            });
+
+            // FIXED: Better mouse leave / re-enter handling
+            document.addEventListener('mouseenter', () => {
+                if (hasMoved) {
+                    cursor.classList.add('visible');
                 }
             });
 
             document.addEventListener('mouseleave', () => {
-                cursor.style.opacity = '0';
+                cursor.classList.remove('visible');
             });
 
             function animateCursor() {
@@ -352,14 +345,12 @@
         if (window.matchMedia('(max-width: 640px)').matches) {
             document.addEventListener('touchstart', (e) => {
                 if (e.target.closest('.close-btn')) return;
-
                 const touch = e.touches[0];
                 const bubble = document.createElement('div');
                 bubble.classList.add('bubble');
                 bubble.style.left = `${touch.clientX - 13}px`;
                 bubble.style.top = `${touch.clientY - 13}px`;
                 document.body.appendChild(bubble);
-
                 setTimeout(() => bubble.remove(), 500);
             });
         }
@@ -368,7 +359,6 @@
         const pfp = document.getElementById('pfp');
         const popup = document.getElementById('popup');
         const closeBtn = document.getElementById('close');
-
         pfp.addEventListener('click', () => {
             popup.classList.add('active');
         });
