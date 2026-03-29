@@ -22,36 +22,43 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             cursor: none;
-            overflow: hidden;
-        }
-        /* Custom Cartoon Cursor - Always on top */
-        .custom-cursor {
-            position: fixed;
-            width: 42px;
-            height: 42px;
-            pointer-events: none;
-            z-index: 999999;
-            user-select: none;
-            opacity: 1;
-            transition: opacity 0.2s ease;
-        }
-        .custom-cursor::after {
-            content: '➤';
-            font-size: 28px;
-            color: #1a1a1a;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(0deg);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
-            line-height: 1;
         }
 
-        /* Hide real cursor more reliably */
-        a, .pfp, .close-btn {
-            cursor: none !important;
+        /* ====================== DESKTOP CURSOR ====================== */
+        @media (hover: hover) and (min-width: 641px) {
+            body {
+                overflow: hidden;
+                cursor: none;
+            }
+            .custom-cursor {
+                position: fixed;
+                width: 42px;
+                height: 42px;
+                pointer-events: none;
+                z-index: 999999;
+                user-select: none;
+                opacity: 1;
+                transition: opacity 0.2s ease;
+            }
+            .custom-cursor::after {
+                content: '➤';
+                font-size: 48px;
+                color: #1a1a1a;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(0deg);
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+                line-height: 1;
+            }
+        }
+
+        /* Hide real cursor on desktop interactive elements */
+        @media (hover: hover) and (min-width: 641px) {
+            a, .pfp, .close-btn {
+                cursor: none !important;
+            }
         }
 
         /* Profile Section */
@@ -78,7 +85,6 @@
                 0 8px 30px rgba(0, 0, 0, 0.12);
         }
 
-        /* Username - Soft glow */
         .username {
             font-size: 25px;
             font-weight: 600;
@@ -184,7 +190,6 @@
             right: 22px;
             font-size: 38px;
             color: #ddd;
-            cursor: none;
             width: 44px;
             height: 44px;
             display: flex;
@@ -198,71 +203,66 @@
             transform: rotate(90deg);
         }
 
-        /* ====================== MOBILE-ONLY ANIMATIONS ====================== */
+        /* ====================== MOBILE-ONLY BUBBLE POP EFFECT ====================== */
+        @media (max-width: 640px) {
+            body {
+                cursor: auto;
+                overflow-y: auto; /* Makes the page scrollable */
+            }
+            .custom-cursor { display: none; }
+
+            .bubble {
+                position: fixed;
+                width: 26px;
+                height: 26px;
+                background: rgba(136, 136, 136, 0.25);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 99999;
+                transform: scale(0.2);
+                opacity: 0.9;
+                animation: bubblePop 0.45s ease-out forwards;
+            }
+        }
+
+        @keyframes bubblePop {
+            0% {
+                transform: scale(0.2);
+                opacity: 0.9;
+            }
+            60% {
+                transform: scale(1.35);
+            }
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile entrance animations (unchanged) */
         @media (max-width: 640px) and (hover: none) {
-            .profile-section {
-                opacity: 0;
-                animation: fadeUp 0.8s forwards 0.2s;
-            }
-            .pfp {
-                opacity: 0;
-                transform: scale(0.85);
-                animation: popIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s;
-            }
-            .username {
-                opacity: 0;
-                animation: fadeUp 0.7s forwards 0.6s;
-            }
-            .subtitle {
-                opacity: 0;
-                animation: fadeUp 0.7s forwards 0.8s;
-            }
-            .main-image {
-                opacity: 0;
-                transform: scale(0.95);
-                animation: fadeUp 0.9s forwards 1s;
-            }
-            .divider {
-                opacity: 0;
-                animation: fadeIn 0.6s forwards 1.2s;
-            }
-            .flower {
-                opacity: 0;
-                animation: fadeIn 0.6s forwards 1.4s;
-            }
-            .links li {
-                opacity: 0;
-                transform: translateY(10px);
-                animation: fadeUp 0.5s forwards;
-            }
+            .profile-section { animation: fadeUp 0.8s forwards 0.2s; opacity: 0; }
+            .pfp { animation: popIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s; opacity: 0; transform: scale(0.85); }
+            .username { animation: fadeUp 0.7s forwards 0.6s; opacity: 0; }
+            .subtitle { animation: fadeUp 0.7s forwards 0.8s; opacity: 0; }
+            .main-image { animation: fadeUp 0.9s forwards 1s; opacity: 0; transform: scale(0.95); }
+            .divider { animation: fadeIn 0.6s forwards 1.2s; opacity: 0; }
+            .flower { animation: fadeIn 0.6s forwards 1.4s; opacity: 0; }
+            .links li { animation: fadeUp 0.5s forwards; opacity: 0; transform: translateY(10px); }
             .links li:nth-child(1) { animation-delay: 1.5s; }
             .links li:nth-child(2) { animation-delay: 1.65s; }
             .links li:nth-child(3) { animation-delay: 1.8s; }
         }
 
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes popIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        /* ================================================================ */
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { to { opacity: 1; } }
 
         @media (max-width: 640px) {
             .pfp { width: 108px; height: 108px; }
             .username { font-size: 23px; }
             .divider { width: 520px; }
             .main-image { max-width: 540px; }
-            .custom-cursor::after { font-size: 42px; }
         }
     </style>
 </head>
@@ -282,7 +282,7 @@
         <li><a href="https://soundcloud.com/chlxrine222" target="_blank">soundcloud</a></li>
     </ul>
 
-    <!-- Custom Cursor -->
+    <!-- Custom Cursor (Desktop only) -->
     <div class="custom-cursor" id="cursor"></div>
 
     <!-- PFP Popup -->
@@ -294,35 +294,68 @@
     </div>
 
     <script>
-        const cursor = document.getElementById('cursor');
-        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0;
+        // Desktop cursor logic (only runs on devices that support hover)
+        if (window.matchMedia('(hover: hover) and (min-width: 641px)').matches) {
+            const cursor = document.getElementById('cursor');
+            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.opacity = '1';
-        });
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursor.style.opacity = '1';
+            });
 
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = '0';
-        });
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+            });
 
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.22;
-            cursorY += (mouseY - cursorY) * 0.22;
-            const dx = mouseX - cursorX;
-            const dy = mouseY - cursorY;
-            const targetRotation = Math.atan2(dy, dx) * (180 / Math.PI);
-            rotation += (targetRotation - rotation) * 0.28;
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.22;
+                cursorY += (mouseY - cursorY) * 0.22;
+                const dx = mouseX - cursorX;
+                const dy = mouseY - cursorY;
+                const targetRotation = Math.atan2(dy, dx) * (180 / Math.PI);
+                rotation += (targetRotation - rotation) * 0.28;
 
-            cursor.style.left = `${cursorX}px`;
-            cursor.style.top = `${cursorY}px`;
-            cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-            requestAnimationFrame(animateCursor);
+                cursor.style.left = `${cursorX}px`;
+                cursor.style.top = `${cursorY}px`;
+                cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Hover scale effect for desktop
+            document.querySelectorAll('a, .close-btn').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.25)`;
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1)`;
+                });
+            });
         }
-        animateCursor();
 
-        // PFP Popup
+        // Mobile tap bubble effect
+        if (window.matchMedia('(max-width: 640px)').matches) {
+            document.addEventListener('touchstart', (e) => {
+                // Skip bubble if tapping the close button
+                if (e.target.closest('.close-btn')) return;
+
+                const touch = e.touches[0];
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.style.left = `${touch.clientX - 13}px`;
+                bubble.style.top = `${touch.clientY - 13}px`;
+                document.body.appendChild(bubble);
+
+                // Remove bubble after animation
+                setTimeout(() => {
+                    bubble.remove();
+                }, 500);
+            });
+        }
+
+        // PFP Popup (works on both)
         const pfp = document.getElementById('pfp');
         const popup = document.getElementById('popup');
         const closeBtn = document.getElementById('close');
@@ -335,16 +368,6 @@
         });
         popup.addEventListener('click', (e) => {
             if (e.target === popup) popup.classList.remove('active');
-        });
-
-        // Hover scale on interactive elements (desktop only)
-        document.querySelectorAll('a, .close-btn').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1.25)`;
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(1)`;
-            });
         });
     </script>
 </body>
