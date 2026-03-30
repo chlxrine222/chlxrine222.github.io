@@ -9,9 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
   
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: #E8E8E8;
+        * { margin: 0; padding:E8E8;
             color: #444444;
             font-family: 'Cambria', serif;
             text-align: center;
@@ -52,4 +50,27 @@
         }
 
         /* Hide custom cursor over interactive elements */
-        .pfp, .
+        .pfp, .thumb-wrapper, #play-btn, .progress-container, .links a, 
+        .close-btn, .main-image {
+            cursor: none !important;
+        }
+
+        .profile-section { margin-bottom: 24px; display: flex; flex-direction: column; align-items: center; }
+        
+        .pfp {
+            width: 92px; 
+            height: 92px; 
+            border-radius: 50%; 
+            object-fit: cover;
+            margin-bottom: 14px; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: none !important;
+        }
+        .pfp:hover {
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            transform: scale(1.08);
+        }
+
+        .username { 
+            font-size: 21px;
