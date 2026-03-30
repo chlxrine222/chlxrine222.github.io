@@ -427,13 +427,15 @@
             const cursor = document.getElementById('cursor');
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0, hasMoved = false;
 
-            // Only set none on body (this fixes the white screen issue)
+            // Only set cursor none on body
             document.body.style.cursor = 'none';
 
+            // Show cursor when mouse enters the page
             document.addEventListener('mouseenter', () => {
                 cursor.classList.add('visible');
             });
 
+            // Hide cursor smoothly when mouse leaves the page
             document.addEventListener('mouseleave', () => {
                 cursor.classList.remove('visible');
             });
@@ -465,7 +467,7 @@
             animateCursor();
         }
 
-        // Mobile Tap Ripple (kept as you wanted)
+        // Mobile Tap Ripple (kept active)
         function createTapRipple(x, y) {
             const ripple = document.createElement('div');
             ripple.className = 'tap-ripple';
