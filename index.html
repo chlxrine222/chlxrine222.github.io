@@ -51,7 +51,7 @@
             }
         }
 
-        /* Hide custom cursor over interactive elements */
+        /* Hide real cursor on interactive elements */
         .pfp, .thumb-wrapper, #play-btn, .progress-container, .links a, 
         .close-btn, .main-image {
             cursor: none !important;
@@ -422,19 +422,18 @@
             player.seekTo(percent * duration);
         });
 
-        // FIXED CURSOR LOGIC
+        // ==================== FIXED CURSOR LOGIC ====================
         if (window.matchMedia('(hover: hover) and (min-width: 641px)').matches) {
             const cursor = document.getElementById('cursor');
             let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0, hasMoved = false;
 
+            // Only set none on body (this fixes the white screen issue)
             document.body.style.cursor = 'none';
 
-            // Show when mouse enters the window
             document.addEventListener('mouseenter', () => {
                 cursor.classList.add('visible');
             });
 
-            // Hide when mouse leaves the window (this fixes the issue)
             document.addEventListener('mouseleave', () => {
                 cursor.classList.remove('visible');
             });
@@ -466,7 +465,7 @@
             animateCursor();
         }
 
-        // Mobile Tap Ripple
+        // Mobile Tap Ripple (kept as you wanted)
         function createTapRipple(x, y) {
             const ripple = document.createElement('div');
             ripple.className = 'tap-ripple';
