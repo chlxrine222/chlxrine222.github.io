@@ -51,7 +51,7 @@
             }
         }
 
-        /* Hide custom cursor over interactive elements */
+        /* Hide real cursor on interactive elements */
         .pfp, .thumb-wrapper, #play-btn, .progress-container, .links a, 
         .close-btn, .main-image {
             cursor: none !important;
@@ -422,28 +422,50 @@
             player.seekTo(percent * duration);
         });
 
-        // ==================== CURSOR FIX ====================
+        // ==================== WORKING CURSOR WITH GRAVITY + PROPER HIDE ====================
         if (window.matchMedia('(hover: hover) and (min-width: 641px)').matches) {
             const cursor = document.getElementById('cursor');
+            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, rotation = 0, hasMoved = false;
 
             document.body.style.cursor = 'none';
 
-            // Show cursor when mouse enters the page
+            // Show when mouse enters page
             document.addEventListener('mouseenter', () => {
                 cursor.classList.add('visible');
             });
 
-            // Hide cursor when mouse leaves the page
+            // Hide when mouse leaves page (this is the important part)
             document.addEventListener('mouseleave', () => {
                 cursor.classList.remove('visible');
             });
 
-            // Update cursor position
             document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                cursor.classList.add('visible');
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!hasMoved) {
+                    hasMoved = true;
+                    cursor.classList.add('visible');
+                }
             });
+
+            function animateCursor() {
+                if (hasMoved) {
+                    // Smooth gravity / trailing effect
+                    cursorX += (mouseX - cursorX) * 0.18;
+                    cursorY += (mouseY - cursorY) * 0.18;
+
+                    const dx = mouseX - cursorX;
+                    const dy = mouseY - cursorY;
+                    const targetRotation = Math.atan2(dy, dx) * (180 / Math.PI);
+                    rotation += (targetRotation - rotation) * 0.25;
+
+                    cursor.style.left = `${cursorX}px`;
+                    cursor.style.top = `${cursorY}px`;
+                    cursor.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+                }
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
         }
 
         // Mobile Tap Ripple
