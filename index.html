@@ -252,6 +252,27 @@
         }
         .close-btn:hover { color: white; transform: rotate(90deg); }
 
+        /* ==================== MOBILE TAP RIPPLE ==================== */
+        .tap-ripple {
+            position: fixed;
+            width: 0;
+            height: 0;
+            background: rgba(136, 136, 136, 0.25);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            animation: rippleAnim 0.6s ease-out forwards;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                width: 80px;
+                height: 80px;
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 640px) {
             body { max-width: 100%; padding: 20px 12px; }
             .beat-section, .main-image { max-width: 260px; }
@@ -436,6 +457,31 @@
                 requestAnimationFrame(animateCursor);
             }
             animateCursor();
+        }
+
+        // ==================== MOBILE TAP RIPPLE EFFECT ====================
+        function createTapRipple(x, y) {
+            const ripple = document.createElement('div');
+            ripple.className = 'tap-ripple';
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            document.body.appendChild(ripple);
+
+            // Remove element after animation
+            setTimeout(() => {
+                ripple.remove();
+            }, 700);
+        }
+
+        // Add tap ripple on mobile (touch events)
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.addEventListener('touchstart', (e) => {
+                // Create ripple for every touch point
+                for (let i = 0; i < e.touches.length; i++) {
+                    const touch = e.touches[i];
+                    createTapRipple(touch.clientX, touch.clientY);
+                }
+            }, { passive: true });
         }
 
         // Popup
